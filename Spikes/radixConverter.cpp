@@ -1,13 +1,10 @@
-//
-//  main.cpp
-//  radixConverter
-//
 /*
  Radix Converter: given a radix-base number, convert to decimal
  
  Usage: "./radixConverter <base 2-16> <number to convert (within 8 digits)>"
  i.e.:  "./radixConverter 2 0101101" spits out "45"
  */
+
 // TODO: finish error checking
 // TODO: finish conversion.
 
