@@ -13,25 +13,39 @@
 #include <cstdlib>
 #include <stdio.h>
 
+/******************************************************
+ * given base number and vector of digits, convert from
+ * n-radix to decimal number and return it
+ */
 int radixConversion(int baseNum, std::vector<int>& digits) {
 // TODO: finish radixConversion method
     // convert convNum from an integer to a vector
     // declare storage for each individual digit
-  //  int vecSize = digits.size(); // vector size
-  //   for (int i = 0; i < vecSize; i++) {
+    //  int vecSize = digits.size(); // vector size
+    //   for (int i = 0; i < vecSize; i++) {
     // convert and store here
-  //}
+    //}
     return 0;
 }
 
-// given an integer, convNum, convert the integer into a vector of each individual digits
+/***************************************************
+ * get individual digits and place them into a vector
+ */
 void getDigits(int convNum, std::vector<int>& digits) {
-  if (convNum > 9) { // check if the number has more than one digit
-    getDigits((convNum / 10), digits); // recurse through the number if there are more digits to grab
+  // check if there's still a number to grab
+  if (convNum > 9) {
+    
+    // recurse through the number if there are no more digits to grab
+    getDigits((convNum / 10), digits);  
   }
-  digits.push_back(convNum % 10); // grab a digit and put it in the digit vector
+
+  // grab a digit and push it back into the digit vector
+  digits.push_back(convNum % 10);
 }
 
+/************************
+ * Main of radixConverter
+ */
 int main(int argc, const char* argv[]) {
     
     /************************
