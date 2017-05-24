@@ -18,20 +18,14 @@
  * n-radix to decimal number and return it
  */
 int radixConversion(int baseNum, std::vector<int>& digits) {
-// TODO: finish radixConversion method
-    // convert convNum from an integer to a vector
-    // declare storage for each individual digit
-    //  int vecSize = digits.size(); // vector size
-    //   for (int i = 0; i < vecSize; i++) {
-    // convert and store here
-    //}
+
     return 0;
 }
 
-/***************************************************
+/****************************************************
  * get individual digits and place them into a vector
  */
-void getDigits(int convNum, std::vector<int>& digits) {
+void getDigits(int convNum, std::vector<int> &digits) {
   // check if there's still a number to grab
   if (convNum > 9) {
     
@@ -69,18 +63,30 @@ int main(int argc, const char* argv[]) {
         // We got the right amount of arguments
         short radixBase = std::atoi(argv[1]); // the radix
         int   radixNum  = std::atoi(argv[2]); // the number itself
-        
-        std::cout << radixBase << std::endl ; // Print the base
-        std::cout << radixNum  << std::endl ; // Print the number
-        
+
         /**********************
-         * Check the Radix Base
+        * Check the Radix Base
+        */
+        
+        if(radixBase > 16 || radixBase < 2) { std::cout << USE_ERROR << std::endl;} else {
+        
+            std::cout << radixBase << std::endl ; // Print the base
+            std::cout << radixNum  << std::endl ; // Print the number
+
+        }
+
+        /******************************
+         * Create a vector and getDigits
          */
-        
-        if(radixBase > 16 || radixBase < 2) { std::cout << USE_ERROR << std::endl;}
-        
-    }
+
+        std::vector<int>    numVec;                                   // Declare our vector but do not initialize it
+        getDigits(radixNum, numVec);                                  // getDigits function call
+        std::cout << radixConversion(radixBase, numVec) << std::endl; // radixConversion function call, and printing the result
+
     
+    }
+
+
     
     return EXIT_SUCCESS; // Return EXIT_SUCCESS (0)
 
