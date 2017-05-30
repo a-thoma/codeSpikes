@@ -15,7 +15,9 @@
  * Given base number and vector of digits, convert from
  * n-radix to decimal number and return it.
  */
+
 int radixConversion(int baseNum, std::vector<int>* digits) {
+    
     // Declare variables
     int result  = 0; // Result variable, initially zero
     int current = 0; // Current variable, initially zero
@@ -51,6 +53,7 @@ int radixConvRecursion(short baseNum, std::vector<int>* digits) {
  * into an integer value, (i.e. A = 10, B = 11, etc.)
  * and pushes it into the digit vector.
  */
+
 void getChars(std::string convStr, std::vector<int>* digits) {
 
     /**********************
