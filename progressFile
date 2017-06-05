@@ -1,10 +1,4 @@
 // TODO:
 
 Project 31: Given a radix base, convert to decimal
-Progress:   Cleaned up comments and removed extraneous error checking
-To do: (!!!) write the main method of radix conversion,
-       (!  ) test getDigits function,
-
-Project GIT: Learn Github/Version control/etc
-Progress: learned basic actions i.e. pulling, pushing, adding, etc via terminal commands.
-To do: Personal git repo?
+Progress:  Finished up to base 16, looking into recursive function for conversion.
