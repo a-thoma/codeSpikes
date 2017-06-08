@@ -38,6 +38,7 @@ public:
 
 	// Define here, implement them in the other file
 	FractalGrid();
+	FractalGrid(int rows, int cols);
 	FractalGrid(int rows, int cols, int density);
 	~FractalGrid();
 
@@ -51,9 +52,9 @@ public:
 	* type (this class)
 	*/
 
-	void buildFractalGrid   (int rows, int cols, FractalGrid* fg);
-	void newFractalColumn   (FractalGrid* fg                    );
-	void finalizeFractalGrid(int rows, int cols, FractalGrid* fg);
+	void         buildFractalGrid   (FractalGrid* fg);
+	void         newFractalColumn   (FractalGrid* fg);
+	void         finalizeFractalGrid(FractalGrid* fg);
 
 };
 

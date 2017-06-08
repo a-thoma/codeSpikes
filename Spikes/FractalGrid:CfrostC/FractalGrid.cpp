@@ -12,13 +12,21 @@
 
 // Generic FractalGrid constructor
 FractalGrid::FractalGrid() {
-	gridRows    = 256;
-	gridCols    = 256;
-	gridDensity = 50 ;
+	gridRows    = 256              ;
+	gridCols    = 256              ;
+	gridDensity = 50               ;
 	gridArr     = new int[gridRows]; // Initialize our grid array
 }
 
-// Verbose FractalGrid constructor
+// Verbose FractalGrid constructor for two arguments
+FractalGrid::FractalGrid(int rows, int cols) {
+	gridRows    = rows             ;
+	gridCols    = cols             ;
+	gridDensity = 50               ;
+	gridArr     = new int[gridRows]; // Initialize our grid array
+}
+
+// Verbose FractalGrid constructor for three arguments
 FractalGrid::FractalGrid(int rows, int cols, int density) {
 	gridRows    = rows             ;
 	gridCols    = cols             ;
@@ -35,7 +43,7 @@ FractalGrid::~FractalGrid() {
 * already a pointer to another array, calls newFractalColumn to create
 * a "second-dimension" and then sets the element of that array.
 */
-void FractalGrid::buildFractalGrid(int rows, int cols, FractalGrid* fg) {
+void FractalGrid::buildFractalGrid(FractalGrid* fg) {
 	// To be implemented
 }
 
@@ -52,6 +60,6 @@ void FractalGrid::newFractalColumn(FractalGrid* fg) {
 * and initializes them. Can be thought of as a sort of check to make
 * sure we're not just printing a non-existent array element.
 */
-void FractalGrid::finalizeFractalGrid(int rows, int cols, FractalGrid* fg) {
+void FractalGrid::finalizeFractalGrid(FractalGrid* fg) {
 	// To be implemented
 }
