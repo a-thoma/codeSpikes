@@ -4,4 +4,4 @@ Project 31: Given a radix base, convert to decimal
 Progress:  Finished up to base 16, looking into recursive function for conversion.
 
 Project 251: Given height, width, and seed, produce a fractal.
-Progress: layed out basic format of program. Look into 2d arrays as a class variable.
+Progress: Split into header and class files, changed implementation of grid to a jagged array that finishes itself into a 2-dimensional array upon completion of the grid-building stage.
