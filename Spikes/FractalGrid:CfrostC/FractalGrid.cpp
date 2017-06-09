@@ -1,15 +1,6 @@
-// Thanks to my buddy Carlos for the help, these comments are his
-
 #include <iostream>
 #include <random>
 #include "FractalGrid.h"
-/**
-* We use the scope resolution operator to define the methods.
-* Its important to know, that the header-definition pattern
-* won't work unless you do this. You break the program if you
-* don't put in the 'FractalGrid::'.
-* Yes, even with constructors.
-*/
 
 // Generic FractalGrid constructor
 FractalGrid::FractalGrid() {
@@ -47,6 +38,18 @@ FractalGrid::FractalGrid(int rows, int cols, int density) {
 	gridArr        = new int[gridRows]                      ; // Initialize our grid array
 }
 
+// Verbose FractalGrid constructor for four arguments
+FractalGrid::FractalGrid(int rows, int cols, int density, int seed) {
+	gridRows       = rows                                   ;
+	gridCols       = cols                                   ;
+	gridDensity    = density                                ;
+	totalParticles = ((float)gridRows    * (float)gridCols) *
+	                 ((float)gridDensity / 100            ) ;
+	maxSteps       = (gridRows * gridCols) * 2              ;
+	gridSeed       = seed                                   ;
+	gridArr        = new int[gridRows]                      ; // Initialize our grid array
+}
+
 FractalGrid::~FractalGrid() {
 	delete gridArr;
 }
@@ -69,6 +72,7 @@ void FractalGrid::buildFractalGrid() {
 	std::cout << "Rows: "            << this->gridRows       << std::endl;
 	std::cout << "Columns: "         << this->gridCols       << std::endl;
 	std::cout << "Density: "         << this->gridDensity    << std::endl;
+	std::cout << "Seed: "            << this->gridSeed       << std::endl;
 	std::cout << "Total particles: " << this->totalParticles << std::endl;
 	std::cout << "Maximum steps: "   << this->maxSteps       << std::endl;
 
@@ -95,7 +99,7 @@ void FractalGrid::buildFractalGrid() {
 		* Check if the particle is already set
 		*/
 
-		
+
 	}
 
 

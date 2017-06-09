@@ -1,17 +1,3 @@
-// Thanks to my buddy Carlos for the help, these comments are his
-
-/**
- * Fractal Grid class goes in its' own header
- * keep private on top, because it's generally neater to do so.
- * The Constructor and Deconstructor should also be declared in the cpp
- */
-
-/**
- * We use these pre processor directives to make sure your class
- * name (and definition) doesn't clash with anothers in the same namespace
- * or even namespace std
- */
-
 #ifndef FRACTAL_GRID_H
 #define FRACTAL_GRID_H
 
@@ -19,7 +5,7 @@ class FractalGrid {
 
 private:
 
-	// This should have the pRNGs for the building step, added later...
+	// Nothing here!
 
 public:
 
@@ -39,20 +25,14 @@ public:
 	* Constructor/Destructor
 	*/
 
-	// Define here, implement them in the other file
-	FractalGrid (                               );
-	FractalGrid (int rows, int cols             );
-	FractalGrid (int rows, int cols, int density);
-	~FractalGrid(                               );
+	FractalGrid (                                         );
+	FractalGrid (int rows, int cols                       );
+	FractalGrid (int rows, int cols, int density          );
+	FractalGrid (int rows, int cols, int density, int seed);
+	~FractalGrid(                                         );
 
 	/**********
 	* Functions
-	*/
-
-	/**
-	* Same with these. You also don't need the scope accessor operator
-	* e.g. FractalGrid::FractalGrid when defining a parameter of the same
-	* type (this class)
 	*/
 
 	void buildFractalGrid   (                 );
