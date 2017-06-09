@@ -8,9 +8,9 @@
 // This is to fix that problem
 // Also don't need scope resolution.
 
-void buildFractalGrid   (FractalGrid* fg);
-void newFractalColumn   (FractalGrid* fg);
-void finalizeFractalGrid(FractalGrid* fg);
+void buildFractalGrid   ();
+void newFractalColumn   ();
+void finalizeFractalGrid();
 
 /*****************
 * Define constants
@@ -32,29 +32,31 @@ int main(int argc, char const *argv[])
 	* Initialize a new fractalGrid
 	*/
 
+	FractalGrid* mainGrid;
+
 	// If we have arguments for dimensions, take them in
 	if (argc == 1) {
 
 		// Create a generic-argument FractalGrid
-		FractalGrid* mainGrid = new FractalGrid();
+		mainGrid = new FractalGrid();
 
-		std::cout << "None specified, generic" << std::endl;
+		std::cout << "None specified, generic" << std::endl; // Placeholder
 	} else if (argc == 3) {
 		
 		// Create a two-argument FractalGrid
-		FractalGrid* mainGrid = new FractalGrid(std::atoi(argv[0]),
-										        std::atoi(argv[1]));
+		mainGrid = new FractalGrid(std::atoi(argv[0]),
+								   std::atoi(argv[1]));
 
-		std::cout << "Rows and Columns specified" << std::endl;
+		std::cout << "Rows and Columns specified" << std::endl; // Placeholder
 
 	} else if (argc == 4) {
 
 		// Create a three-argument FractalGrid
-		FractalGrid* mainGrid = new FractalGrid(std::atoi(argv[0]),
-											    std::atoi(argv[1]),
-											    std::atoi(argv[2]));
+		mainGrid = new FractalGrid(std::atoi(argv[0]),
+								   std::atoi(argv[1]),
+								   std::atoi(argv[2]));
 
-		std::cout << "Rows, Columns, and Density specified" << std::endl;
+		std::cout << "Rows, Columns, and Density specified" << std::endl; // Placeholder
 
 	} else {
 		// Print the error
@@ -66,6 +68,11 @@ int main(int argc, char const *argv[])
 	* Build the fractalGrid
 	*/
 
+	// Set up the random number generators (using Mersenne Twister engine)
+
+
+
+	mainGrid->buildFractalGrid();
 	
 
 	/*************************
