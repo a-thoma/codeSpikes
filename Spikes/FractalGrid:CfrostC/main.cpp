@@ -68,10 +68,6 @@ int main(int argc, char const *argv[])
 	* Build the fractalGrid
 	*/
 
-	// Set up the random number generators (using Mersenne Twister engine)
-
-
-
 	mainGrid->buildFractalGrid();
 	
 
