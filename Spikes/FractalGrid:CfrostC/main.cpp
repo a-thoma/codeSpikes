@@ -9,15 +9,7 @@ void buildFractalGrid   ();
 void newFractalColumn   ();
 void finalizeFractalGrid();
 
-/*****************
-* Define constants
-*/
 
-const std::string argStr   = "Error: Too few/many arguments.";
-const std::string usageStr = "Usage: ""./CfrostC""\n"
-						     "       ""./CfrostC <Row count> <Column count>""\n"
-						     "       ""./CfrostC <Row count> <Column count> <Density>""\n"
-						     "       ""./CfrostC <Row count> <Column count> <Density> <Seed>";
 
 /*********************
 * Main driver function
@@ -25,6 +17,16 @@ const std::string usageStr = "Usage: ""./CfrostC""\n"
 
 int main(int argc, char const *argv[])
 {
+
+	/*****************
+	* Define constants
+	*/
+
+	const std::string argStr   = "Error: Too few/many arguments.";
+	const std::string usageStr = "Usage: ""./CfrostC""\n"
+							     "       ""./CfrostC <Row count> <Column count>""\n"
+							     "       ""./CfrostC <Row count> <Column count> <Density>""\n"
+							     "       ""./CfrostC <Row count> <Column count> <Density> <Seed>";
 
 	std::cout << "argc: " << argc << std::endl; // Placeholder
 
@@ -112,6 +114,9 @@ int main(int argc, char const *argv[])
 	* Goodbye, fractalGrid...
 	*/
 
+	// for (int i = 0; i < mainGrid->totalParticles; i++) {
+	// 	delete[] mainGrid->gridArr[i];
+	// }
 	delete mainGrid;
 
 	return EXIT_SUCCESS;

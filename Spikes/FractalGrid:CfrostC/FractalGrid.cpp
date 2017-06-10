@@ -11,7 +11,7 @@ FractalGrid::FractalGrid() {
 	                 ((float)gridDensity / 100            ) ;
 	maxSteps       = (gridRows * gridCols) * 2              ;
 	gridSeed       = 0                                      ;
-	gridArr        = new int[gridRows]                      ; // Initialize our grid array
+	// gridArr        = new int*[gridRows]                     ; // Initialize our grid array
 }
 
 // Verbose FractalGrid constructor for two arguments
@@ -23,7 +23,7 @@ FractalGrid::FractalGrid(int rows, int cols) {
 	                 ((float)gridDensity / 100            ) ;
 	maxSteps       = (gridRows * gridCols) * 2              ;
 	gridSeed       = 0                                      ;
-	gridArr        = new int[gridRows]                      ; // Initialize our grid array
+	// gridArr        = new int*[gridRows]                     ; // Initialize our grid array
 }
 
 // Verbose FractalGrid constructor for three arguments
@@ -35,7 +35,7 @@ FractalGrid::FractalGrid(int rows, int cols, int density) {
 	                 ((float)gridDensity / 100            ) ;
 	maxSteps       = (gridRows * gridCols) * 2              ;
 	gridSeed       = 0                                      ;
-	gridArr        = new int[gridRows]                      ; // Initialize our grid array
+	// gridArr        = new int*[gridRows]                     ; // Initialize our grid array
 }
 
 // Verbose FractalGrid constructor for four arguments
@@ -47,9 +47,10 @@ FractalGrid::FractalGrid(int rows, int cols, int density, int seed) {
 	                 ((float)gridDensity / 100            ) ;
 	maxSteps       = (gridRows * gridCols) * 2              ;
 	gridSeed       = seed                                   ;
-	gridArr        = new int[gridRows]                      ; // Initialize our grid array
+	// gridArr        = new int*[gridRows]                     ; // Initialize our grid array
 }
 
+// What am I doing with this? Should I leave this or do I call delete gridArr in main?
 FractalGrid::~FractalGrid() {
 	delete gridArr;
 }
@@ -62,6 +63,12 @@ FractalGrid::~FractalGrid() {
 */
 void FractalGrid::buildFractalGrid() {
 	std::cout << "buildFractalGrid called" << std::endl; // placeholder
+
+	/***************************************
+	* Initialize the array of the grid here?
+	*/
+
+	this->gridArr = new int*[this->gridRows];
 
 	/******************************
 	* Get next position in the grid
@@ -76,11 +83,6 @@ void FractalGrid::buildFractalGrid() {
 	std::cout << "Total particles: " << this->totalParticles << std::endl;
 	std::cout << "Maximum steps: "   << this->maxSteps       << std::endl;
 
-	/**
-	* Will either pass two random number generators to this function for
-	* recursion purposes, or run a loop in this function.
-	*/
-
 	/****************
 	* Set up the pRNG
 	*/
@@ -89,27 +91,56 @@ void FractalGrid::buildFractalGrid() {
 	std::mt19937 gridEngine(this->gridSeed);
 
 	// Number Distribution, from 0 to maxSteps
-	std::uniform_real_distribution<float> gridDist(0.0, (float)this->maxSteps);
+	std::uniform_real_distribution<float> gridDist(0.0, (float)this->totalParticles);
+
+	// We need two generated coordinates, but left uninitialized... or do we?
+	int randRow = 50;
+	int randCol = 50;
 
 	/**
 	* Is a for-loop really necessary? Could something be better?
 	*/
-	for (int i = 0; i < this->totalParticles; i++) {
-		/*************************************
-		* Check if the particle is already set
-		*/
+
+	
+	// for (int i = 0; i < this->totalParticles; i++) {
+	// 	************************************
+	// 	* Check if the particle is already set
+		
+
+		// Initialize the coordinates as two random numbers
+		// randRow = gridDist(gridEngine);
+		// randCol = gridDist(gridEngine);
 
 
-	}
 
+	// }
+
+	// Fix gridEngines bounds, or fix the dimensions of the array.
+	// randRow = gridDist(gridEngine);
+	// randCol = gridDist(gridEngine);
+
+	std::cout << "randRow:" << randRow << std::endl;
+	std::cout << "randCol:" << randCol << std::endl;
+
+	this->setGridValue(randRow, randCol);
+
+}
+
+/******************************************
+* Function to set the specified grid value.
+*/
+void FractalGrid::setGridValue(int row, int col) {
+	this->gridArr[row] = new int[col];
+	this->gridArr[row][col] = 69;
+	std::cout << this->gridArr[row][col] << std::endl;
 
 }
 
 /***********************************************************************
 * Function to initialize a new array as an element of our initial array.
 */
-void FractalGrid::newFractalColumn() {
-	// To be implemented
+void FractalGrid::newFractalColumn(int row) {
+	std::cout << "newFractalColumn called" << std::endl;
 }
 
 /*********************************************************************
