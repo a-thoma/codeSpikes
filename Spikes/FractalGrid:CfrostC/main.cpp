@@ -1,15 +1,13 @@
 #include <iostream>
 #include "FractalGrid.h"
 
-/******************
-* Define Prototypes
+/********************************************
+* Declare Prototypes from FractalGrid we need
 */
 
 void buildFractalGrid   ();
-void newFractalColumn   ();
+void printFractalGrid   ();
 void finalizeFractalGrid();
-
-
 
 /*********************
 * Main driver function
@@ -49,7 +47,7 @@ int main(int argc, char const *argv[])
 				// Create a generic-argument FractalGrid
 				mainGrid = new FractalGrid();
 
-				std::cout << "None specified, generic" << std::endl; // Placeholder
+				// std::cout << "None specified, generic" << std::endl; // Placeholder
 
 				// We're done
 				break;
@@ -104,11 +102,12 @@ int main(int argc, char const *argv[])
 	*/
 
 	mainGrid->buildFractalGrid();
-	
 
-	/*************************
-	* Finalize the fractalGrid
+	/**********************
+	* Print the FractalGrid (should be to an outfile at some point)
 	*/
+
+	mainGrid->printFractalGrid();
 
 	/************************
 	* Goodbye, fractalGrid...

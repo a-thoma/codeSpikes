@@ -7,8 +7,7 @@ FractalGrid::FractalGrid() {
 	gridRows       = 256                                    ;
 	gridCols       = 256                                    ;
 	gridDensity    = 50                                     ;
-	totalParticles = ((float)gridRows    * (float)gridCols) *
-	                 ((float)gridDensity / 100            ) ;
+	totalParticles = gridRows * gridCols / gridDensity      ;
 	maxSteps       = (gridRows * gridCols) * 2              ;
 	gridSeed       = 0                                      ;
 	// gridArr        = new int*[gridRows]                     ; // Initialize our grid array
@@ -19,8 +18,7 @@ FractalGrid::FractalGrid(int rows, int cols) {
 	gridRows       = rows                                   ;
 	gridCols       = cols                                   ;
 	gridDensity    = 50                                     ;
-	totalParticles = ((float)gridRows    * (float)gridCols) *
-	                 ((float)gridDensity / 100            ) ;
+	totalParticles = gridRows * gridCols / gridDensity      ;
 	maxSteps       = (gridRows * gridCols) * 2              ;
 	gridSeed       = 0                                      ;
 	// gridArr        = new int*[gridRows]                     ; // Initialize our grid array
@@ -31,8 +29,7 @@ FractalGrid::FractalGrid(int rows, int cols, int density) {
 	gridRows       = rows                                   ;
 	gridCols       = cols                                   ;
 	gridDensity    = density                                ;
-	totalParticles = ((float)gridRows    * (float)gridCols) *
-	                 ((float)gridDensity / 100            ) ;
+	totalParticles = gridRows * gridCols / gridDensity      ;
 	maxSteps       = (gridRows * gridCols) * 2              ;
 	gridSeed       = 0                                      ;
 	// gridArr        = new int*[gridRows]                     ; // Initialize our grid array
@@ -43,8 +40,7 @@ FractalGrid::FractalGrid(int rows, int cols, int density, int seed) {
 	gridRows       = rows                                   ;
 	gridCols       = cols                                   ;
 	gridDensity    = density                                ;
-	totalParticles = ((float)gridRows    * (float)gridCols) *
-	                 ((float)gridDensity / 100            ) ;
+	totalParticles = gridRows * gridCols / gridDensity      ;
 	maxSteps       = (gridRows * gridCols) * 2              ;
 	gridSeed       = seed                                   ;
 	// gridArr        = new int*[gridRows]                     ; // Initialize our grid array
@@ -90,57 +86,104 @@ void FractalGrid::buildFractalGrid() {
 	// Mersenne Twister engine with seed
 	std::mt19937 gridEngine(this->gridSeed);
 
-	// Number Distribution, from 0 to maxSteps
-	std::uniform_real_distribution<float> gridDist(0.0, (float)this->totalParticles);
+	// Number Distribution for gridRows, from 0 to gridRows as a max
+	std::uniform_real_distribution<float> rowDist(0.0, (float)this->gridRows);
+	// Number Distribution for gridCols, from 0 to gridCols as a max
+	std::uniform_real_distribution<float> colDist(0.0, (float)this->gridCols);
 
 	// We need two generated coordinates, but left uninitialized... or do we?
-	int randRow = 50;
-	int randCol = 50;
+	int randRow;
+	int randCol;
 
 	/**
 	* Is a for-loop really necessary? Could something be better?
 	*/
 
 	
-	// for (int i = 0; i < this->totalParticles; i++) {
-	// 	************************************
-	// 	* Check if the particle is already set
-		
+	for (int i = this->totalParticles; i > 0; i--) {
 
-		// Initialize the coordinates as two random numbers
-		// randRow = gridDist(gridEngine);
-		// randCol = gridDist(gridEngine);
+		// Set our new grid coordinates
+		randRow = rowDist(gridEngine);
+		randCol = colDist(gridEngine);
+			
+		// std::cout << "randRow:" << randRow << std::endl; // Placeholder
+		// std::cout << "randCol:" << randCol << std::endl; // Placeholder
 
+		// Set the coordinate
+		this->setGridValue(randRow, randCol);
 
+	}
 
-	// }
+	// Finalize the grid, to make sure we didn't miss any columns
+	this-> finalizeFractalGrid();
 
-	// Fix gridEngines bounds, or fix the dimensions of the array.
-	// randRow = gridDist(gridEngine);
-	// randCol = gridDist(gridEngine);
-
-	std::cout << "randRow:" << randRow << std::endl;
-	std::cout << "randCol:" << randCol << std::endl;
-
-	this->setGridValue(randRow, randCol);
+	// We're done
 
 }
 
-/******************************************
-* Function to set the specified grid value.
+/******************************************************************
+* Function to set the specified grid value. If the grid value is 0,
+* it is set to 1. If it's already 1, it will check the grid values
+* to the left, right, top, and bottom, and set one of them instead.
 */
 void FractalGrid::setGridValue(int row, int col) {
-	this->gridArr[row] = new int[col];
-	this->gridArr[row][col] = 69;
-	std::cout << this->gridArr[row][col] << std::endl;
 
+	// Check if the element exists
+
+	if (this->gridArr[row]) {
+		// If we're here, here's already a grid column
+
+		// Check if the element is zero
+		if(this->gridArr[row][col] != 1) {
+
+			// If it's not a 1, set it
+			this->gridArr[row][col] = 1;
+			// std::cout << this->gridArr[row][col] << std::endl; // Placeholder
+		} else {
+			/****************************************************************
+			* There's already a 1, so check it's four neighbors (top, bottom,
+			* left, right).
+			*/
+			
+				// Fix this
+				// this->setGridValue(row + 1, col); // Right
+				// this->setGridValue(row - 1, col); // Left
+				// this->setGridValue(row, col + 1); // Top
+				// this->setGridValue(row, col - 1); // Bottom
+			}
+
+			// We're done checking the neighbors
+		} else {
+			// Otherwise, we need a new grid column
+			this->newFractalColumn(row);
+			
+			// Call again
+			this->setGridValue(row, col);
+	}
+}
+
+
+/*************************************************************
+* Function to return the value of a grid array element, either
+* 0 or 1.
+*/
+int FractalGrid::getGridValue(int row, int col) {
+	return this->gridArr[row][col];
 }
 
 /***********************************************************************
 * Function to initialize a new array as an element of our initial array.
 */
 void FractalGrid::newFractalColumn(int row) {
-	std::cout << "newFractalColumn called" << std::endl;
+	this->gridArr[row] = new int[this->gridCols];
+}
+
+/**************************************************
+* Function to print the entire grid in 2 dimensions (will be an outfile)
+*/
+void FractalGrid::printFractalGrid() {
+	// To be implemented
+	std::cout << "printFractalGrid Called" << std::endl;
 }
 
 /*********************************************************************
@@ -150,5 +193,16 @@ void FractalGrid::newFractalColumn(int row) {
 * sure we're not just printing a non-existent array element.
 */
 void FractalGrid::finalizeFractalGrid() {
-	// To be implemented
+
+	// Loop through all the elements of the grid array
+	for (int i = 0; i < gridRows; i++) {
+
+		// Check if each element exists
+		if (!this->gridArr[i]) {
+
+			// If not, make a new column
+			this->newFractalColumn(i);
+			std::cout << "Didn't exist at row: " << i << std::endl;
+		}
+	}
 }
