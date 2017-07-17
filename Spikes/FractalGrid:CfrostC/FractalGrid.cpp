@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <random>
 #include "FractalGrid.h"
 
@@ -66,8 +67,8 @@ void FractalGrid::buildFractalGrid() {
 
 	this->gridArr = new int*[this->gridRows];
 
-	/******************************
-	* Get next position in the grid
+	/*****************************
+*	* Get next position in the grid
 	*/
 
 	// Test print some values first
@@ -131,7 +132,7 @@ void FractalGrid::setGridValue(int row, int col) {
 	// Check if the element exists
 
 	if (this->gridArr[row]) {
-		// If we're here, here's already a grid column
+		//{ If we're here, here's already a grid column
 
 		// Check if the element is zero
 		if(this->gridArr[row][col] != 1) {
@@ -143,11 +144,16 @@ void FractalGrid::setGridValue(int row, int col) {
 			/****************************************************************
 			* There's already a 1, so check it's four neighbors (top, bottom,
 			* left, right).
+			*
+			* POSSIBLE FIX: Modular Arithmetic to wrap the array indices?
 			*/
+
+
+				
 			
-				// Fix this
-				// this->setGridValue(row + 1, col); // Right
-				// this->setGridValue(row - 1, col); // Left
+				// Fix this. Need to check bounds of the array before anything.
+				// this->setGridValue(row, col);     // Right
+				// this->setGridValue(row, col);     // Left
 				// this->setGridValue(row, col + 1); // Top
 				// this->setGridValue(row, col - 1); // Bottom
 			}
@@ -184,6 +190,22 @@ void FractalGrid::newFractalColumn(int row) {
 void FractalGrid::printFractalGrid() {
 	// To be implemented
 	std::cout << "printFractalGrid Called" << std::endl;
+
+	// Create an outfile
+	std::ofstream myFile;
+	// Try to open it, create it if not
+	myFile.open("grid.txt"); 
+
+	// Write the grid
+	for (int i = 0; i < gridRows; i++) {       // Each row
+		for (int j = 0; j < gridCols-1; j++) { // Each col
+			myFile << this->gridArr[i][j];     // write the element at i,j
+		}
+		myFile << "\n";                        // end the row, start a new one
+	}
+
+	// Close the file
+	myFile.close();
 }
 
 /*********************************************************************
