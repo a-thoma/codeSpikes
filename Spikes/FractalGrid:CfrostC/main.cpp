@@ -13,8 +13,7 @@ void finalizeFractalGrid();
 * Main driver function
 */
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
 
 	/*****************
 	* Define constants
