@@ -35,12 +35,12 @@ public:
 	* Functions
 	*/
 
-	void buildFractalGrid   (                 );
-	int  getGridValue       (int row, int col );
-	void setGridValue       (int row, int col );
-	void newFractalColumn   (int row          );
-	void printFractalGrid   (                 );
-	void finalizeFractalGrid(                 );
+	void buildFractalGrid   (                                    );
+	int  getGridValue       (int row, int col                    );
+	int  setGridValue       (int row, int col, int rep, bool rec );
+	void newFractalColumn   (int row                             );
+	void printFractalGrid   (                                    );
+	void finalizeFractalGrid(                                    );
 
 };
 

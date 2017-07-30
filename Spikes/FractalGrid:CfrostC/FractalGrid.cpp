@@ -107,12 +107,20 @@ void FractalGrid::buildFractalGrid() {
 		randRow = rowDist(gridEngine);
 		randCol = colDist(gridEngine);
 			
-		// std::cout << "randRow:" << randRow << std::endl; // Placeholder
-		// std::cout << "randCol:" << randCol << std::endl; // Placeholder
+		std::cout << "randRow:" << randRow << std::endl; // Placeholder
+		std::cout << "randCol:" << randCol << std::endl; // Placeholder
 
-		// Set the coordinate
-		this->setGridValue(randRow, randCol);
+		std::cout << "i = " << i << std::endl;
 
+		// Set the coordinate and get the remaining repititions
+		int rep = this->setGridValue(randRow, randCol, i, false);
+
+		// Update our iter just in case it changed
+		if(rep < i) {
+
+			// Update our i
+			i = rep;
+		}
 	}
 
 	// Finalize the grid, to make sure we didn't miss any columns
@@ -127,11 +135,12 @@ void FractalGrid::buildFractalGrid() {
 * it is set to 1. If it's already 1, it will check the grid values
 * to the left, right, top, and bottom, and set one of them instead.
 */
-void FractalGrid::setGridValue(int row, int col) {
+int FractalGrid::setGridValue(int row, int col, int rep, bool rec) {
 
 	// Check if the element exists
 
 	if (this->gridArr[row]) {
+
 		//{ If we're here, here's already a grid column
 
 		// Check if the element is zero
@@ -140,7 +149,8 @@ void FractalGrid::setGridValue(int row, int col) {
 			// If it's not a 1, set it
 			this->gridArr[row][col] = 1;
 			// std::cout << this->gridArr[row][col] << std::endl; // Placeholder
-		} else {
+		} else if(rec == false) {
+
 			/****************************************************************
 			* There's already a 1, so check it's four neighbors (top, bottom,
 			* left, right).
@@ -148,24 +158,39 @@ void FractalGrid::setGridValue(int row, int col) {
 			* POSSIBLE FIX: Modular Arithmetic to wrap the array indices?
 			*/
 
+			if(rec == false) {
 
+				// We've already recursed once, so set N/E/S/W nodes to 1.
 				
-			
-				// Fix this. Need to check bounds of the array before anything.
-				// this->setGridValue(row, col);     // Right
-				// this->setGridValue(row, col);     // Left
-				// this->setGridValue(row, col + 1); // Top
-				// this->setGridValue(row, col - 1); // Bottom
+				// Wraparound
+				if((row - (gridRows - 1)) > 0) row = row - gridRows; // Row wrap
+				if((col - (gridCols - 1)) > 0) col = col - gridCols; // Col wrap
+				this->setGridValue(row + 1, col, rep, true); // Right
+				rep--;
+				// std::cout << "Set right of " << row << ", " << col << std::endl;
+				this->setGridValue(row - 1, col, rep, true); // Left
+				rep--;
+				// std::cout << "Set left of " << row << ", " << col << std::endl;
+				this->setGridValue(row, col + 1, rep, true); // Top
+				rep--;
+				// std::cout << "Set top of " << row << ", " << col << std::endl;
+				this->setGridValue(row, col - 1, rep, true); // Bottom
+				rep--;
+				// std::cout << "Set bottom of " << row << ", " << col << std::endl;
+				}
 			}
 
 			// We're done checking the neighbors
 		} else {
+
 			// Otherwise, we need a new grid column
 			this->newFractalColumn(row);
 			
 			// Call again
-			this->setGridValue(row, col);
+			this->setGridValue(row, col, rep, true);
 	}
+
+	return rep;
 }
 
 
