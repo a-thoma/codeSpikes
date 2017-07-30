@@ -153,9 +153,7 @@ int FractalGrid::setGridValue(int row, int col, int rep, bool rec) {
 
 			/****************************************************************
 			* There's already a 1, so check it's four neighbors (top, bottom,
-			* left, right).
-			*
-			* POSSIBLE FIX: Modular Arithmetic to wrap the array indices?
+			* left, right) and set them to 1.
 			*/
 
 			if(rec == false) {
@@ -213,7 +211,9 @@ void FractalGrid::newFractalColumn(int row) {
 * Function to print the entire grid in 2 dimensions (will be an outfile)
 */
 void FractalGrid::printFractalGrid() {
-	// To be implemented
+
+	//TODO: I want this as a PPM file, preferably. Or something else bitmap-related.
+
 	std::cout << "printFractalGrid Called" << std::endl;
 
 	// Create an outfile
@@ -221,7 +221,7 @@ void FractalGrid::printFractalGrid() {
 	// Try to open it, create it if not
 	myFile.open("grid.txt"); 
 
-	// Write the grid
+	// Write the grid.
 	for (int i = 0; i < gridRows; i++) {       // Each row
 		for (int j = 0; j < gridCols-1; j++) { // Each col
 			myFile << this->gridArr[i][j];     // write the element at i,j
