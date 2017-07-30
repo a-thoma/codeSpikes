@@ -8,5 +8,6 @@ CURRENT PROJECTS:
 
     FractalGrid(CfrostC):
 
-    Takes arguments of width, height, and a seed (to be implemented), and produces a fractal.
+    Takes arguments of width, height, and a seed (to be implemented), and produces a "fractal", similar to
+    a frosted window-pane..
     Format of fractal to be decided.
