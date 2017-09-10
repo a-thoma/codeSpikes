@@ -5,9 +5,9 @@
 * Declare Prototypes from FractalGrid we need
 */
 
+void initFractalGrid();
 void buildFractalGrid   ();
 void printFractalGrid   ();
-void finalizeFractalGrid();
 
 /*********************
 * Main driver function
@@ -95,6 +95,12 @@ int main(int argc, char const *argv[]) {
 		std::cout << argStr    << std::endl;
 		std::cout << usageStr  << std::endl;
 	}
+
+	/**
+	* Initialize the fractalGrid
+	*/
+
+	mainGrid->initFractalGrid();
 
 	/**********************
 	* Build the fractalGrid

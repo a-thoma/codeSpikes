@@ -49,7 +49,32 @@ FractalGrid::FractalGrid(int rows, int cols, int density, int seed) {
 
 // What am I doing with this? Should I leave this or do I call delete gridArr in main?
 FractalGrid::~FractalGrid() {
-	delete gridArr;
+	// delete gridArr;
+}
+
+/**
+* Function that initilalizes all of the grid elements.
+*/
+void FractalGrid::initFractalGrid() {
+
+	std::cout << "initFractalGrid called" << std::endl; // placeholder
+
+	/***************************************
+	* Initialize the array of the grid here?
+	*/
+
+	this->gridArr = new int*[this->gridRows];
+
+	for (int i = 0; i < this->gridRows - 1; i++) {
+
+		this->gridArr[i] = new int[this->gridCols];
+
+		for (int j = 0; j < this->gridCols - 1; j++) {
+
+			this->gridArr[i][j] = 0;
+		}
+	}
+
 }
 
 /********************************************************************
@@ -60,12 +85,6 @@ FractalGrid::~FractalGrid() {
 */
 void FractalGrid::buildFractalGrid() {
 	std::cout << "buildFractalGrid called" << std::endl; // placeholder
-
-	/***************************************
-	* Initialize the array of the grid here?
-	*/
-
-	this->gridArr = new int*[this->gridRows];
 
 	/*****************************
 *	* Get next position in the grid
@@ -123,11 +142,7 @@ void FractalGrid::buildFractalGrid() {
 		}
 	}
 
-	// Finalize the grid, to make sure we didn't miss any columns
-	this-> finalizeFractalGrid();
-
 	// We're done
-
 }
 
 /******************************************************************
@@ -135,57 +150,50 @@ void FractalGrid::buildFractalGrid() {
 * it is set to 1. If it's already 1, it will check the grid values
 * to the left, right, top, and bottom, and set one of them instead.
 */
+// TODO: Rework this without it being a jagged array.
 int FractalGrid::setGridValue(int row, int col, int rep, bool rec) {
 
-	// Check if the element exists
+	// Check if the element is zero
+	if(this->gridArr[row][col] != 1) {
 
-	if (this->gridArr[row]) {
+		// If it's not a 1, set it
+		this->gridArr[row][col] = 1;
 
-		//{ If we're here, here's already a grid column
+		// std::cout << this->gridArr[row][col] << std::endl; // Placeholder
+	} 
 
-		// Check if the element is zero
-		if(this->gridArr[row][col] != 1) {
+	/****************************************************************
+	* There's already a 1, so check it's four neighbors (top, bottom,
+	* left, right) and set them to 1.
+	*/
 
-			// If it's not a 1, set it
-			this->gridArr[row][col] = 1;
-			// std::cout << this->gridArr[row][col] << std::endl; // Placeholder
-		} else if(rec == false) {
+	if(rec == false) {
 
-			/****************************************************************
-			* There's already a 1, so check it's four neighbors (top, bottom,
-			* left, right) and set them to 1.
-			*/
+		// We've already recursed once, so set N/E/S/W nodes to 1.
+		
+		// Wraparound
+		if((row - (gridRows - 1)) > 0) row = row - gridRows; // Row wrap
+		if((col - (gridCols - 1)) > 0) col = col - gridCols; // Col wrap
 
-			if(rec == false) {
+		// Right
+		this->setGridValue(row + 1, col, rep, true);
+		rep--;
+		// std::cout << "Set right of " << row << ", " << col << std::endl;
 
-				// We've already recursed once, so set N/E/S/W nodes to 1.
-				
-				// Wraparound
-				if((row - (gridRows - 1)) > 0) row = row - gridRows; // Row wrap
-				if((col - (gridCols - 1)) > 0) col = col - gridCols; // Col wrap
-				this->setGridValue(row + 1, col, rep, true); // Right
-				rep--;
-				// std::cout << "Set right of " << row << ", " << col << std::endl;
-				this->setGridValue(row - 1, col, rep, true); // Left
-				rep--;
-				// std::cout << "Set left of " << row << ", " << col << std::endl;
-				this->setGridValue(row, col + 1, rep, true); // Top
-				rep--;
-				// std::cout << "Set top of " << row << ", " << col << std::endl;
-				this->setGridValue(row, col - 1, rep, true); // Bottom
-				rep--;
-				// std::cout << "Set bottom of " << row << ", " << col << std::endl;
-				}
-			}
+		// Left
+		this->setGridValue(row - 1, col, rep, true);
+		rep--;
+		// std::cout << "Set left of " << row << ", " << col << std::endl;
 
-			// We're done checking the neighbors
-		} else {
+		// Top
+		this->setGridValue(row, col + 1, rep, true);
+		rep--;
+		// std::cout << "Set top of " << row << ", " << col << std::endl;
 
-			// Otherwise, we need a new grid column
-			this->newFractalColumn(row);
-			
-			// Call again
-			this->setGridValue(row, col, rep, true);
+		// Bottom
+		this->setGridValue(row, col - 1, rep, true);
+		rep--;
+		// std::cout << "Set bottom of " << row << ", " << col << std::endl;
 	}
 
 	return rep;
@@ -200,13 +208,6 @@ int FractalGrid::getGridValue(int row, int col) {
 	return this->gridArr[row][col];
 }
 
-/***********************************************************************
-* Function to initialize a new array as an element of our initial array.
-*/
-void FractalGrid::newFractalColumn(int row) {
-	this->gridArr[row] = new int[this->gridCols];
-}
-
 /**************************************************
 * Function to print the entire grid in 2 dimensions (will be an outfile)
 */
@@ -218,38 +219,22 @@ void FractalGrid::printFractalGrid() {
 
 	// Create an outfile
 	std::ofstream myFile;
+
 	// Try to open it, create it if not
 	myFile.open("grid.txt"); 
 
 	// Write the grid.
-	for (int i = 0; i < gridRows; i++) {       // Each row
-		for (int j = 0; j < gridCols-1; j++) { // Each col
-			myFile << this->gridArr[i][j];     // write the element at i,j
+	for (int i = 0; i < gridRows; i++) {
+		for (int j = 0; j < gridCols-1; j++) {
+
+			// print out the element at i,j
+			myFile << this->gridArr[i][j];
 		}
-		myFile << "\n";                        // end the row, start a new one
+
+		// End the row, make a new one
+		myFile << "\n";
 	}
 
 	// Close the file
 	myFile.close();
-}
-
-/*********************************************************************
-* Function to finalize the grid array. This function checks for any
-* uninitialized grid rows (i.e. rows that are not pointers to columns)
-* and initializes them. Can be thought of as a sort of check to make
-* sure we're not just printing a non-existent array element.
-*/
-void FractalGrid::finalizeFractalGrid() {
-
-	// Loop through all the elements of the grid array
-	for (int i = 0; i < gridRows; i++) {
-
-		// Check if each element exists
-		if (!this->gridArr[i]) {
-
-			// If not, make a new column
-			this->newFractalColumn(i);
-			std::cout << "Didn't exist at row: " << i << std::endl;
-		}
-	}
 }
