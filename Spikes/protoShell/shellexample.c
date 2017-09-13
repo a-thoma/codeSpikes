@@ -39,6 +39,7 @@ int main(int argc, const char *argv[]) {
 
 	/*
 	// !!!placeholder!!!
+	// print the buffer as one string
 	printf("%s\n", buf);
 	*/
 
@@ -47,6 +48,7 @@ int main(int argc, const char *argv[]) {
 
 	/*
 	// !!!placeholder!!!
+	// print the buffer, split by tokens (parsing args)
 	while(token != NULL) {
 
 		// print the first token
@@ -57,17 +59,7 @@ int main(int argc, const char *argv[]) {
 	}
 	*/
 
-	
-	// Parse the data we took in through the buffer
-	for (int i = 0; i < sizeof(buf); i++) {
-
-		int ctr = 0; // counter for string array?
-		if(buf[i] != '\n') {
-
-			// Take all the info before that and throw it somehwere...?
-		}
-	}
-	
+	//
 
 	return 0;
 }
