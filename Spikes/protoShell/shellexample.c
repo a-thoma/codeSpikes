@@ -9,8 +9,9 @@
 
 #include <stdio.h>
 #include <stdlib.h> // for calloc
-#include <unistd.h> // for exec1?
-#include <dirent.h> // for exec1?
+#include <string.h> // for strtok
+#include <unistd.h> // for...
+#include <dirent.h> // for...
 
 int main(int argc, const char *argv[]) {
 	
@@ -20,7 +21,11 @@ int main(int argc, const char *argv[]) {
 
 	// We need...
 	char *buf = (char*)calloc(256, sizeof(char)); // char buffer to take args
-	char *strbuf[64]; // 2-d char array for strings made of args (size???)
+	// char *strbuf[64]; // 2-d char array for strings made of args (size???)
+
+	// for tokens...
+	char *token; // pointer to token char
+	const char s[2] = " ";
 
 	/*
 	 * Actual Code
@@ -33,10 +38,26 @@ int main(int argc, const char *argv[]) {
 	fgets(buf, 256, stdin);
 
 	/*
-	// Placeholder to test the buffer
+	// !!!placeholder!!!
 	printf("%s\n", buf);
 	*/
 
+	// Get the first token, using delimiter s
+	token = strtok(buf, s);
+
+	/*
+	// !!!placeholder!!!
+	while(token != NULL) {
+
+		// print the first token
+		printf("%s\n", token);
+
+		// set token to NULL with delimiter s
+		token = strtok(NULL, s);
+	}
+	*/
+
+	
 	// Parse the data we took in through the buffer
 	for (int i = 0; i < sizeof(buf); i++) {
 
@@ -46,6 +67,7 @@ int main(int argc, const char *argv[]) {
 			// Take all the info before that and throw it somehwere...?
 		}
 	}
+	
 
 	return 0;
 }
