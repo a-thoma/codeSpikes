@@ -11,3 +11,7 @@ CURRENT PROJECTS:
     Takes arguments of width, height, and a seed (to be implemented), and produces a "fractal", similar to
     a frosted window-pane.
     Format of fractal to be decided.
+
+    protoShell:
+
+    Spike of a shell-like program I'm working on. Prompts for arguments, parses them, passes them via systemcall.
