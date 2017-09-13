@@ -1,3 +1,12 @@
+/*
+ * @AUTHOR: fudgyone
+ * https://github.com/fudgyone
+ *
+ * Just a shell for funsies. If you can even call it a shell. Very barebones.
+ * Takes arguments via fgets into a char buffer, parses them, then passes
+ * them on to the OS via system call.
+ */
+
 #include <stdio.h>
 #include <stdlib.h> // for calloc
 #include <unistd.h> // for exec1?
