@@ -15,3 +15,7 @@ CURRENT PROJECTS:
     protoShell:
 
     Spike of a shell-like program I'm working on. Prompts for arguments, parses them, passes them via systemcall.
+
+    personalTriage: TBI (To Be Implemented)
+
+    Schedule that takes in major events entered by user, organizes them by date and level of importance (other qualifiers as well) and reports to the user what they should be focusing on, could allocate time to, etc.
